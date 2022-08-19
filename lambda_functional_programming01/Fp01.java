@@ -147,7 +147,7 @@ public class Fp01 {
 
     //9) List elemanları arasından 7'den büyük, çift, en küçük değeri bulan bir method oluşturun.
     public static void getYedidenBuyukCiftMin(List<Integer> list) {
-        int max = list.stream().distinct().filter(t -> t % 2 == 0).filter(t -> t > 7).reduce(Integer.MAX_VALUE, (t, u) -> t < u ? t : u);
+        int max = list.stream().distinct().filter(t -> t % 2 == 0).filter(t -> t > 7).reduce((t, u) -> t < u ? t : u).get();
         System.out.println("YedidenBuyukCiftMin = " + max);
     }
 

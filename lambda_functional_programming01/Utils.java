@@ -25,6 +25,9 @@ public class Utils {
 
         return s1+s2;
     }
+public static double YarisiniAl(int s){
+        return s/2;
+}
 
 }
 

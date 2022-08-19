@@ -1,7 +1,10 @@
 package JAVA_82.lambda_functional_programming01;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Fp02 {
     /*
@@ -27,12 +30,30 @@ public class Fp02 {
         liste.add(8);
 
         ListelemanlariniYazdirFunctional(liste);
+
         System.out.println();
         ciftElemanlariYazdirFunctional(liste);
+
         System.out.println();
         tekElemanlarinKareleriniYazdirFunctional(liste);
+
         System.out.println();
         tekrarsizTekElemanlarinKupunuYazdirFunctional(liste);
+
+        System.out.println();
+        tekrarsizCiftElemanlarinKareToplami(liste);
+
+        System.out.println();
+        tekrarsizCiftelemlarinKupCarpimi(liste);
+
+        System.out.println();
+        getMaxEleman(liste);
+
+        System.out.println();
+        YedidenBuyukCiftMin(liste);
+
+        System.out.println();
+        getTersSiralaTekrarsizElemanlarinYarisi(liste);
 
     }
 
@@ -63,10 +84,41 @@ public class Fp02 {
 
 
     //   5 - Tekrarsız çift elementlerin karelerinin toplamını hesaplayan bir method oluşturun.
-    public static void tekrarsizCiftelemlarinKareToplami(List<Integer> list) {
-        list.stream().distinct().filter(Utils::CiftElemaniSec).map(Utils::KareAl).forEach(Utils::ayniSatirdaBosluklaYazdir);
 
+    public static void tekrarsizCiftElemanlarinKareToplami(List<Integer> list) {
+        int top1 =list.stream().distinct().filter(Utils::CiftElemaniSec).map(Utils::KareAl).reduce(Math::addExact).get();
+        int top2 =list.stream().distinct().filter(Utils::CiftElemaniSec).map(Utils::KareAl).reduce(0,Math::addExact);
+        int top3 =list.stream().distinct().filter(Utils::CiftElemaniSec).map(Utils::KareAl).reduce(0,Integer::sum);
+        System.out.println(top1);
+        System.out.println(top2);
+        System.out.println(top2);
     }
 
+    //  6 - Tekrarsız çift elemanların küpünün çarpımını hesaplayan bir method oluşturun.
+    public static void tekrarsizCiftelemlarinKupCarpimi(List<Integer> list) {
+        int carpim = list.stream().distinct().filter(Utils::CiftElemaniSec).map(Utils::KupAl).reduce(1,Math::multiplyExact);
+        System.out.println(carpim);
+    }
+
+    //7) List elemanları arasından en büyük değeri bulan bir method oluşturun.
+    public static void getMaxEleman(List<Integer> list) {
+        int max = list.stream().distinct().reduce(Math::max).get();
+        System.out.println("En Büyük Eleman : " + max);
+    }
+//Ödev
+    //8)List elemanları arasından en küçük değeri bulan bir method oluşturun.(Method Reference)
+
+//9) List elemanları arasından 7'den büyük, çift, en küçük değeri bulan bir method oluşturun.
+
+    public static void YedidenBuyukCiftMin(List<Integer>liste){
+        int sayi=liste.stream().distinct().filter(t->t>7).filter(Utils::CiftElemaniSec).reduce(Math::min).get();
+        System.out.println(sayi);
+    }
+        // Ters sıralama ile tekrarsız ve 5'ten büyük elemanların
+        // yarı değerlerini(elamanın ikiye bölüm sonucunu) bulan bir method oluşturun.
+    public static void getTersSiralaTekrarsizElemanlarinYarisi(List<Integer>liste){
+        List<Double>sonuc= liste.stream().distinct().filter(t->t>5).map(Utils::YarisiniAl).sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+        System.out.println(sonuc);
+    }
 
 }
